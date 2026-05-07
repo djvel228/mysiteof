@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brew & Co — Specialty Coffee</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --coffee-950: #1a0800;
+      --coffee-900: #2d1200;
+      --coffee-800: #451a03;
+      --coffee-700: #78350f;
+      --coffee-600: #92400e;
+      --coffee-500: #b45309;
+      --coffee-400: #d97706;
+      --gold:        #fbbf24;
+      --gold-light:  #fde68a;
+      --cream:       #fef3c7;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: #0f0500;
+      color: #fef3c7;
+      font-family: 'Montserrat', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Noise grain overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .font-display { font-family: 'Cormorant', serif; }
+
+    /* ── Glass card ── */
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(251,191,36,0.12);
+    }
+
+    .glass-hover {
+      transition: background 250ms ease, border-color 250ms ease, transform 250ms ease, box-shadow 250ms ease;
+    }
+    .glass-hover:hover {
+      background: rgba(251,191,36,0.08);
+      border-color: rgba(251,191,36,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(251,191,36,0.1);
+    }
+
+    /* ── Gold gradient text ── */
+    .text-gold-gradient {
+      background: linear-gradient(135deg, #fbbf24, #fde68a, #d97706);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Glow ── */
+    .glow-gold {
+      box-shadow: 0 0 30px rgba(251,191,36,0.25), 0 0 80px rgba(251,191,36,0.1);
+    }
+    .text-glow {
+      text-shadow: 0 0 40px rgba(251,191,36,0.4);
+    }
+
+    /* ── Animated hero text ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-12px); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position:  200% center; }
+    }
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .anim-fade-up   { animation: fadeUp  0.8s ease forwards; }
+    .anim-fade-in   { animation: fadeIn  1.2s ease forwards; }
+    .anim-float     { animation: float   5s ease-in-out infinite; }
+    .anim-rotate    { animation: rotateSlow 20s linear infinite; }
+    .anim-scale-in  { animation: scaleIn 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+    .delay-1 { animation-delay: 0.15s; opacity: 0; }
+    .delay-2 { animation-delay: 0.3s;  opacity: 0; }
+    .delay-3 { animation-delay: 0.45s; opacity: 0; }
+    .delay-4 { animation-delay: 0.6s;  opacity: 0; }
+    .delay-5 { animation-delay: 0.75s; opacity: 0; }
+
+    /* ── CTA button ── */
+    .btn-primary {
+      background: linear-gradient(135deg, #fbbf24, #d97706);
+      color: #1a0800;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 1rem 2.5rem;
+      border-radius: 999px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 200ms ease, box-shadow 200ms ease;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #fde68a, #fbbf24);
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(251,191,36,0.4); }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-outline {
+      border: 1px solid rgba(251,191,36,0.4);
+      color: #fbbf24;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: 1rem 2.5rem;
+      border-radius: 999px;
+      transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+      cursor: pointer;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(251,191,36,0.1);
+      border-color: #fbbf24;
+      transform: translateY(-2px);
+    }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 1200px;
+      z-index: 50;
+      transition: background 300ms ease, box-shadow 300ms ease;
+    }
+    .navbar.scrolled {
+      background: rgba(15,5,0,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 4px 40px rgba(0,0,0,0.4);
+      border: 1px solid rgba(251,191,36,0.1);
+    }
+
+    /* ── Hero background ── */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(120,53,15,0.5) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 20%, rgba(251,191,36,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(69,26,3,0.6) 0%, transparent 70%),
+        #0f0500;
+    }
+
+    /* ── Section separator ── */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+      margin: 0 auto;
+    }
+
+    /* ── Menu card image placeholder ── */
+    .menu-img {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── Gallery grid ── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto;
+      gap: 12px;
+    }
+    .gallery-grid .tall { grid-row: span 2; }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid .tall { grid-row: span 1; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+<nav class="navbar" id="navbar" aria-label="Main navigation">
+  <div class="glass rounded-2xl px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3 cursor-pointer" aria-label="Brew & Co home">
+      <div class="w-8 h-8 relative flex-shrink-0">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+          <circle cx="16" cy="16" r="15" stroke="#fbbf24" stroke-width="1.5"/>
+          <path d="M10 20 C10 14 13 10 16 10 C19 10 22 14 22 20" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+          <path d="M22 16 C24 15 26 16 26 18 C26 20 24 21 22 20" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+          <line x1="8" y1="22" x2="24" y2="22" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M13 8 Q14 6 15 8" stroke="#d97706" stroke-width="1" stroke-linecap="round" fill="none"/>
+          <path d="M16 7 Q17 5 18 7" stroke="#d97706" stroke-width="1" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="font-display text-xl font-semibold tracking-wide text-gold-gradient">Brew & Co</span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-amber-200/70" role="list">
+      <li><a href="#menu"    class="hover:text-amber-200 transition-colors duration-200 cursor-pointer">Menu</a></li>
+      <li><a href="#story"   class="hover:text-amber-200 transition-colors duration-200 cursor-pointer">Our Story</a></li>
+      <li><a href="#gallery" class="hover:text-amber-200 transition-colors duration-200 cursor-pointer">Ambiance</a></li>
+      <li><a href="#contact" class="hover:text-amber-200 transition-colors duration-200 cursor-pointer">Find Us</a></li>
+    </ul>
+
+    <!-- CTA -->
+    <a href="#menu" class="hidden md:block btn-primary text-sm" aria-label="Order now">
+      <span>Order Now</span>
+    </a>
+
+    <!-- Mobile hamburger -->
+    <button id="menuBtn" class="md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer" aria-label="Toggle mobile menu" aria-expanded="false">
+      <svg id="menuIconOpen" class="w-6 h-6 text-amber-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+      <svg id="menuIconClose" class="w-6 h-6 text-amber-200 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <div id="mobileMenu" class="md:hidden hidden glass rounded-2xl mt-2 px-6 py-5" role="navigation" aria-label="Mobile navigation">
+    <ul class="flex flex-col gap-4 text-sm font-medium text-amber-200/80" role="list">
+      <li><a href="#menu"    class="block hover:text-amber-200 transition-colors cursor-pointer py-1">Menu</a></li>
+      <li><a href="#story"   class="block hover:text-amber-200 transition-colors cursor-pointer py-1">Our Story</a></li>
+      <li><a href="#gallery" class="block hover:text-amber-200 transition-colors cursor-pointer py-1">Ambiance</a></li>
+      <li><a href="#contact" class="block hover:text-amber-200 transition-colors cursor-pointer py-1">Find Us</a></li>
+      <li class="pt-2">
+        <a href="#menu" class="btn-primary w-full text-center block" aria-label="Order now">
+          <span>Order Now</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════
+     HERO
+══════════════════════════════════════ -->
+<section class="hero-bg relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-32 pb-24 overflow-hidden" aria-labelledby="hero-heading">
+
+  <!-- Floating ring decoration -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-amber-600/10 anim-rotate pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full border border-amber-800/5 pointer-events-none" style="animation: rotateSlow 40s linear infinite reverse;" aria-hidden="true"></div>
+
+  <!-- Badge -->
+  <div class="anim-scale-in delay-1 inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 text-xs font-semibold tracking-widest uppercase text-amber-300" role="note">
+    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 inline-block" aria-hidden="true"></span>
+    Specialty Coffee Since 2014
+  </div>
+
+  <!-- Main heading -->
+  <h1 id="hero-heading" class="font-display text-gold-gradient text-glow anim-fade-up delay-2"
+      style="font-size: clamp(3rem, 9vw, 8rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.03em; max-width: 900px;">
+    Every Cup<br />
+    <em style="font-style: italic; font-weight: 400;">Tells a</em> Story
+  </h1>
+
+  <!-- Subheading -->
+  <p class="mt-8 text-amber-200/70 font-light leading-relaxed anim-fade-up delay-3"
+     style="font-size: clamp(1rem, 2vw, 1.2rem); max-width: 520px; line-height: 1.75;">
+    Single-origin beans, hand-crafted with intention. From sunrise espresso to late-evening pour-overs — we brew moments worth savoring.
+  </p>
+
+  <!-- CTAs -->
+  <div class="mt-12 flex flex-wrap items-center justify-center gap-4 anim-fade-up delay-4">
+    <a href="#menu" class="btn-primary" aria-label="Explore our menu">
+      <span>Explore Menu</span>
+    </a>
+    <a href="#story" class="btn-outline" aria-label="Learn our story">
+      Our Story
+    </a>
+  </div>
+
+  <!-- Stats row -->
+  <div class="mt-20 flex flex-wrap justify-center gap-12 anim-fade-up delay-5">
+    <div class="text-center">
+      <div class="font-display text-gold-gradient font-bold" style="font-size: 2.5rem; line-height: 1;">12+</div>
+      <div class="text-amber-200/50 text-xs tracking-widest uppercase mt-1 font-medium">Origins</div>
+    </div>
+    <div class="w-px bg-amber-800/30 self-stretch" aria-hidden="true"></div>
+    <div class="text-center">
+      <div class="font-display text-gold-gradient font-bold" style="font-size: 2.5rem; line-height: 1;">98k</div>
+      <div class="text-amber-200/50 text-xs tracking-widest uppercase mt-1 font-medium">Happy Guests</div>
+    </div>
+    <div class="w-px bg-amber-800/30 self-stretch" aria-hidden="true"></div>
+    <div class="text-center">
+      <div class="font-display text-gold-gradient font-bold" style="font-size: 2.5rem; line-height: 1;">4.9</div>
+      <div class="text-amber-200/50 text-xs tracking-widest uppercase mt-1 font-medium">Rating</div>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 anim-fade-in" style="animation-delay:1.5s; opacity:0;" aria-hidden="true">
+    <span class="text-amber-600/50 text-xs tracking-widest uppercase font-medium">Scroll</span>
+    <div class="w-px h-10 bg-gradient-to-b from-amber-600/40 to-transparent"></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     MARQUEE RIBBON
+══════════════════════════════════════ -->
+<div class="overflow-hidden border-y border-amber-900/30 py-4" aria-hidden="true" role="presentation">
+  <div class="flex gap-0 whitespace-nowrap" style="animation: marquee 20s linear infinite;">
+    <div class="flex gap-12 pr-12 text-xs font-semibold tracking-widest uppercase text-amber-800/60 shrink-0">
+      <span>Single Origin</span><span>·</span>
+      <span>Cold Brew</span><span>·</span>
+      <span>Pour Over</span><span>·</span>
+      <span>Specialty Espresso</span><span>·</span>
+      <span>Latte Art</span><span>·</span>
+      <span>Seasonal Blends</span><span>·</span>
+      <span>Artisan Pastries</span><span>·</span>
+      <span>Fair Trade</span><span>·</span>
+      <span>Small Batch Roasting</span><span>·</span>
+      <span>Single Origin</span><span>·</span>
+      <span>Cold Brew</span><span>·</span>
+      <span>Pour Over</span><span>·</span>
+      <span>Specialty Espresso</span><span>·</span>
+      <span>Latte Art</span><span>·</span>
+      <span>Seasonal Blends</span><span>·</span>
+      <span>Artisan Pastries</span><span>·</span>
+      <span>Fair Trade</span><span>·</span>
+      <span>Small Batch Roasting</span><span>·</span>
+    </div>
+  </div>
+</div>
+<style>
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
+
+
+<!-- ══════════════════════════════════════
+     MENU SECTION
+══════════════════════════════════════ -->
+<section id="menu" class="relative py-32 px-6" aria-labelledby="menu-heading">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Section header -->
+    <div class="text-center mb-20 reveal">
+      <p class="text-amber-500/70 text-xs tracking-widest uppercase font-semibold mb-4">Crafted With Care</p>
+      <h2 id="menu-heading" class="font-display text-gold-gradient" style="font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em;">
+        Our Signature<br/>Drinks
+      </h2>
+      <div class="divider mt-6"></div>
+    </div>
+
+    <!-- Menu grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Card 1 -->
+      <article class="glass glass-hover rounded-2xl p-6 flex flex-col items-center text-center cursor-pointer reveal" tabindex="0" aria-label="Ethiopian Pour Over coffee">
+        <div class="menu-img mb-6 w-32 h-32" style="background: radial-gradient(circle at 35% 35%, #a16207, #78350f, #2d1200);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg class="w-14 h-14 opacity-60" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M14 34 C14 22 18 14 24 14 C30 14 34 22 34 34" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" fill="none"/>
+              <path d="M34 24 C38 23 42 25 42 29 C42 33 38 34 34 32" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <line x1="10" y1="36" x2="38" y2="36" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+              <path d="M19 10 Q21 6 23 10" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <path d="M24 8 Q26 4 28 8" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+        </div>
+        <span class="text-amber-500/60 text-xs tracking-widest uppercase font-semibold mb-2">Pour Over</span>
+        <h3 class="font-display text-amber-100 font-semibold text-xl mb-2">Ethiopian Yirgacheffe</h3>
+        <p class="text-amber-200/50 text-sm leading-relaxed mb-5">Bright floral notes with hints of jasmine, bergamot, and a crisp citrus finish.</p>
+        <div class="mt-auto flex items-center justify-between w-full">
+          <span class="font-display text-gold-gradient text-xl font-semibold">$6.50</span>
+          <button class="btn-primary py-2 px-4 text-xs" aria-label="Add Ethiopian Yirgacheffe to order"><span>Add</span></button>
+        </div>
+      </article>
+
+      <!-- Card 2 — Featured -->
+      <article class="glass glass-hover rounded-2xl p-6 flex flex-col items-center text-center cursor-pointer reveal relative overflow-hidden"
+               style="border-color: rgba(251,191,36,0.3); background: rgba(251,191,36,0.06);"
+               tabindex="0" aria-label="House Espresso, featured item">
+        <div class="absolute top-4 right-4 px-2.5 py-1 rounded-full text-xs font-bold tracking-widest uppercase text-amber-900" style="background: linear-gradient(135deg, #fbbf24, #d97706);" aria-label="Most popular">
+          Popular
+        </div>
+        <div class="menu-img mb-6 w-32 h-32 relative" style="background: radial-gradient(circle at 35% 35%, #92400e, #451a03, #1a0800);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg class="w-14 h-14 opacity-70" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="12" y="20" width="24" height="18" rx="4" stroke="#fbbf24" stroke-width="2" fill="none"/>
+              <path d="M36 26 C40 25 44 27 44 31 C44 35 40 36 36 34" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <line x1="8" y1="38" x2="40" y2="38" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+              <rect x="18" y="12" width="12" height="8" rx="2" stroke="#d97706" stroke-width="1.5" fill="none"/>
+              <path d="M21 16 L27 16" stroke="#d97706" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <span class="text-amber-500/60 text-xs tracking-widest uppercase font-semibold mb-2">Espresso</span>
+        <h3 class="font-display text-amber-100 font-semibold text-xl mb-2">House Double Shot</h3>
+        <p class="text-amber-200/50 text-sm leading-relaxed mb-5">Rich caramel body, dark chocolate undertones, and a lingering sweet crema.</p>
+        <div class="mt-auto flex items-center justify-between w-full">
+          <span class="font-display text-gold-gradient text-xl font-semibold">$4.00</span>
+          <button class="btn-primary py-2 px-4 text-xs" aria-label="Add House Double Shot to order"><span>Add</span></button>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="glass glass-hover rounded-2xl p-6 flex flex-col items-center text-center cursor-pointer reveal" tabindex="0" aria-label="Cold Brew Reserve coffee">
+        <div class="menu-img mb-6 w-32 h-32 relative" style="background: radial-gradient(circle at 35% 35%, #1e40af, #1e1b4b, #0a0114);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg class="w-12 h-12 opacity-60" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M16 8 L32 8 L28 38 L20 38 Z" stroke="#a5b4fc" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <path d="M12 14 L36 14" stroke="#a5b4fc" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M14 20 L34 20" stroke="#a5b4fc" stroke-width="1" stroke-linecap="round" stroke-dasharray="3 3"/>
+              <ellipse cx="24" cy="38" rx="8" ry="2" stroke="#a5b4fc" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+        </div>
+        <span class="text-amber-500/60 text-xs tracking-widest uppercase font-semibold mb-2">Cold Brew</span>
+        <h3 class="font-display text-amber-100 font-semibold text-xl mb-2">Reserve Cold Brew</h3>
+        <p class="text-amber-200/50 text-sm leading-relaxed mb-5">Steeped 18 hours. Silky-smooth texture with chocolate-oak depth. Served over hand-carved ice.</p>
+        <div class="mt-auto flex items-center justify-between w-full">
+          <span class="font-display text-gold-gradient text-xl font-semibold">$7.00</span>
+          <button class="btn-primary py-2 px-4 text-xs" aria-label="Add Reserve Cold Brew to order"><span>Add</span></button>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="glass glass-hover rounded-2xl p-6 flex flex-col items-center text-center cursor-pointer reveal" tabindex="0" aria-label="Honey Oat Latte coffee">
+        <div class="menu-img mb-6 w-32 h-32 relative" style="background: radial-gradient(circle at 35% 35%, #d97706, #92400e, #2d1200);">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg class="w-13 h-13 opacity-65" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:52px;height:52px;">
+              <path d="M10 40 L14 16 L34 16 L38 40 Z" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <path d="M8 16 L40 16" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+              <path d="M18 8 C18 4 22 4 22 8 C22 12 26 12 26 8 C26 4 30 4 30 8" stroke="#d97706" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <path d="M14 28 Q24 24 34 28" stroke="#fbbf24" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.6"/>
+            </svg>
+          </div>
+        </div>
+        <span class="text-amber-500/60 text-xs tracking-widest uppercase font-semibold mb-2">Latte</span>
+        <h3 class="font-display text-amber-100 font-semibold text-xl mb-2">Honey Oat Latte</h3>
+        <p class="text-amber-200/50 text-sm leading-relaxed mb-5">Velvety oat milk, wildflower honey, a pinch of cardamom — warmth in every sip.</p>
+        <div class="mt-auto flex items-center justify-between w-full">
+          <span class="font-display text-gold-gradient text-xl font-semibold">$5.50</span>
+          <button class="btn-primary py-2 px-4 text-xs" aria-label="Add Honey Oat Latte to order"><span>Add</span></button>
+        </div>
+      </article>
+    </div>
+
+    <!-- View full menu link -->
+    <div class="text-center mt-12 reveal">
+      <a href="#" class="btn-outline inline-block" aria-label="View full menu">View Full Menu</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     STORY SECTION
+══════════════════════════════════════ -->
+<section id="story" class="relative py-32 px-6 overflow-hidden" aria-labelledby="story-heading">
+
+  <!-- Background glow -->
+  <div class="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 rounded-full pointer-events-none" style="background: radial-gradient(circle, rgba(120,53,15,0.3) 0%, transparent 70%);" aria-hidden="true"></div>
+
+  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+    <!-- Left — visual -->
+    <div class="reveal order-2 md:order-1 relative">
+      <!-- Large quote card -->
+      <div class="glass rounded-3xl p-10 relative" style="background: rgba(120,53,15,0.12); border-color: rgba(251,191,36,0.15);">
+        <svg class="absolute top-6 left-8 w-10 h-10 text-amber-700/40" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+        </svg>
+        <p class="font-display italic text-amber-100/90 leading-relaxed mt-6" style="font-size: clamp(1.25rem, 2.5vw, 1.6rem); line-height: 1.6;">
+          "Coffee is not just a beverage. It is a ritual — a quiet conversation between the grower, the roaster, and you."
+        </p>
+        <div class="mt-8 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-lg font-display font-bold text-amber-900" style="background: linear-gradient(135deg, #fbbf24, #d97706);" aria-hidden="true">M</div>
+          <div>
+            <p class="font-semibold text-amber-200 text-sm">Marco Bellini</p>
+            <p class="text-amber-500/60 text-xs tracking-wide">Founder & Head Roaster</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating badge -->
+      <div class="absolute -bottom-6 -right-4 md:-right-8 glass rounded-2xl px-5 py-4 text-center glow-gold" aria-label="Award: Best Coffee 2023">
+        <div class="font-display text-gold-gradient font-bold" style="font-size: 1.8rem; line-height: 1;">2023</div>
+        <div class="text-amber-400/70 text-xs tracking-widest uppercase font-medium">Best Coffee</div>
+        <div class="text-amber-500/50 text-xs">City Awards</div>
+      </div>
+    </div>
+
+    <!-- Right — text -->
+    <div class="reveal order-1 md:order-2">
+      <p class="text-amber-500/70 text-xs tracking-widest uppercase font-semibold mb-4">Our Story</p>
+      <h2 id="story-heading" class="font-display text-gold-gradient leading-tight mb-8"
+          style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05;">
+        Born From<br/>Obsession
+      </h2>
+      <div class="space-y-5 text-amber-200/65 leading-relaxed" style="font-size: 1rem; line-height: 1.9;">
+        <p>It started with a trip to the highlands of Ethiopia in 2013. Marco stood in a coffee forest for the first time and realized he'd been drinking coffee completely wrong his entire life.</p>
+        <p>He spent the next year apprenticing with roasters across Colombia, Japan, and Scandinavia, obsessively learning each step of the journey from cherry to cup.</p>
+        <p>Brew & Co opened its doors in 2014 with a single mission: close the distance between the farmer and the first sip. Every origin we carry has a name, a face, and a story — and we'll happily tell you all of them.</p>
+      </div>
+
+      <!-- Values -->
+      <div class="mt-10 grid grid-cols-2 gap-4">
+        <div class="glass rounded-xl p-4" aria-label="Direct trade value">
+          <div class="w-8 h-8 mb-3 text-amber-500" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <p class="text-amber-200 font-semibold text-sm">Direct Trade</p>
+          <p class="text-amber-500/50 text-xs mt-1">Paid above Fair Trade minimums</p>
+        </div>
+        <div class="glass rounded-xl p-4" aria-label="Small batch roasting value">
+          <div class="w-8 h-8 mb-3 text-amber-500" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <p class="text-amber-200 font-semibold text-sm">Small Batch</p>
+          <p class="text-amber-500/50 text-xs mt-1">Roasted fresh every Tuesday</p>
+        </div>
+        <div class="glass rounded-xl p-4" aria-label="Transparency value">
+          <div class="w-8 h-8 mb-3 text-amber-500" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </div>
+          <p class="text-amber-200 font-semibold text-sm">Transparent</p>
+          <p class="text-amber-500/50 text-xs mt-1">Farm-to-cup traceability</p>
+        </div>
+        <div class="glass rounded-xl p-4" aria-label="Sustainability value">
+          <div class="w-8 h-8 mb-3 text-amber-500" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22V12M12 12C12 6 18 2 22 6c0 0-2 6-10 6zM12 12C12 6 6 2 2 6c0 0 2 6 10 6z"/>
+            </svg>
+          </div>
+          <p class="text-amber-200 font-semibold text-sm">Sustainable</p>
+          <p class="text-amber-500/50 text-xs mt-1">Carbon-neutral by 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     TESTIMONIALS
+══════════════════════════════════════ -->
+<section class="relative py-20 px-6" aria-labelledby="testimonials-heading">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <p class="text-amber-500/70 text-xs tracking-widest uppercase font-semibold mb-4">What People Say</p>
+      <h2 id="testimonials-heading" class="font-display text-gold-gradient" style="font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em;">
+        Heard Around<br/>the Table
+      </h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-6">
+      <blockquote class="glass glass-hover rounded-2xl p-7 reveal cursor-default">
+        <div class="flex gap-1 mb-4" aria-label="5 out of 5 stars">
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-amber-200/75 text-sm leading-relaxed italic">"The Ethiopian pour-over changed my entire understanding of what coffee can be. Floral, light, electric. I haven't been able to go anywhere else since."</p>
+        <footer class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold font-display text-amber-900 flex-shrink-0" style="background: linear-gradient(135deg, #fbbf24, #92400e);" aria-hidden="true">S</div>
+          <div>
+            <p class="text-amber-200 font-semibold text-sm">Sofia R.</p>
+            <p class="text-amber-600/50 text-xs">Coffee enthusiast</p>
+          </div>
+        </footer>
+      </blockquote>
+
+      <blockquote class="glass glass-hover rounded-2xl p-7 reveal cursor-default" style="border-color: rgba(251,191,36,0.2); background: rgba(251,191,36,0.05);">
+        <div class="flex gap-1 mb-4" aria-label="5 out of 5 stars">
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-amber-200/75 text-sm leading-relaxed italic">"I work from here three days a week. The ambiance is perfect — never too loud, never too quiet. And the honey oat latte is basically a creative superpower."</p>
+        <footer class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold font-display text-amber-900 flex-shrink-0" style="background: linear-gradient(135deg, #fde68a, #d97706);" aria-hidden="true">J</div>
+          <div>
+            <p class="text-amber-200 font-semibold text-sm">James T.</p>
+            <p class="text-amber-600/50 text-xs">Freelance designer</p>
+          </div>
+        </footer>
+      </blockquote>
+
+      <blockquote class="glass glass-hover rounded-2xl p-7 reveal cursor-default">
+        <div class="flex gap-1 mb-4" aria-label="5 out of 5 stars">
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        </div>
+        <p class="text-amber-200/75 text-sm leading-relaxed italic">"Marco explained the entire origin story of our Colombian single-origin. That level of passion and knowledge — you can actually taste it in every cup."</p>
+        <footer class="mt-5 flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold font-display text-amber-900 flex-shrink-0" style="background: linear-gradient(135deg, #fbbf24, #78350f);" aria-hidden="true">A</div>
+          <div>
+            <p class="text-amber-200 font-semibold text-sm">Amira K.</p>
+            <p class="text-amber-600/50 text-xs">Food blogger</p>
+          </div>
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     GALLERY / AMBIANCE
+══════════════════════════════════════ -->
+<section id="gallery" class="relative py-32 px-6" aria-labelledby="gallery-heading">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-16 reveal">
+      <p class="text-amber-500/70 text-xs tracking-widest uppercase font-semibold mb-4">The Space</p>
+      <h2 id="gallery-heading" class="font-display text-gold-gradient" style="font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; line-height: 1; letter-spacing: -0.02em;">
+        Step Inside
+      </h2>
+      <p class="text-amber-200/50 mt-4 max-w-md mx-auto leading-relaxed text-sm">A sanctuary of warmth — reclaimed wood, exposed brick, warm Edison bulbs, and the constant perfume of fresh-roasted coffee.</p>
+      <div class="divider mt-6"></div>
+    </div>
+
+    <!-- Gallery grid with CSS art -->
+    <div class="gallery-grid reveal" role="list" aria-label="Ambiance gallery">
+
+      <!-- Cell 1 — tall -->
+      <div class="tall rounded-2xl overflow-hidden relative cursor-pointer group" role="listitem" aria-label="Barista at work">
+        <div class="w-full h-full min-h-64" style="background: linear-gradient(160deg, #2d1200 0%, #78350f 40%, #451a03 70%, #1a0800 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+            <svg class="w-16 h-16 text-amber-500" fill="none" viewBox="0 0 64 64" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="32" cy="24" r="10"/>
+              <path d="M22 24 C22 14 26 8 32 8 C38 8 42 14 42 24"/>
+              <path d="M42 18 C48 16 54 19 54 25 C54 31 48 33 42 30"/>
+              <line x1="16" y1="40" x2="48" y2="40"/>
+              <path d="M20 40 L20 52 L44 52 L44 40"/>
+              <path d="M26 46 L38 46" stroke-width="1"/>
+            </svg>
+            <span class="text-amber-300/80 text-xs tracking-widest uppercase font-semibold">Barista at Work</span>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-amber-950/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="absolute inset-0 border border-amber-700/20 rounded-2xl group-hover:border-amber-500/40 transition-colors duration-300"></div>
+        <div class="absolute bottom-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span class="text-amber-200 text-xs font-semibold tracking-wide">Crafted with care</span>
+        </div>
+      </div>
+
+      <!-- Cell 2 -->
+      <div class="rounded-2xl overflow-hidden relative cursor-pointer group" style="min-height: 200px;" role="listitem" aria-label="Interior warm atmosphere">
+        <div class="w-full h-full" style="background: linear-gradient(135deg, #1a0800 0%, #451a03 50%, #78350f 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+            <svg class="w-12 h-12 text-amber-400" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M8 40 L8 20 L24 8 L40 20 L40 40 Z"/>
+              <rect x="18" y="28" width="12" height="12" rx="1"/>
+              <path d="M16 20 L24 14 L32 20"/>
+            </svg>
+            <span class="text-amber-300/80 text-xs tracking-widest uppercase font-semibold">The Space</span>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-amber-950/70"></div>
+        </div>
+        <div class="absolute inset-0 border border-amber-700/20 rounded-2xl group-hover:border-amber-500/40 transition-colors duration-300"></div>
+      </div>
+
+      <!-- Cell 3 -->
+      <div class="rounded-2xl overflow-hidden relative cursor-pointer group" style="min-height: 200px;" role="listitem" aria-label="Latte art close up">
+        <div class="w-full h-full" style="background: radial-gradient(circle at 50% 50%, #92400e 0%, #451a03 50%, #1a0800 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+            <svg class="w-12 h-12 text-amber-300" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <circle cx="24" cy="24" r="16"/>
+              <path d="M24 8 Q32 16 24 24 Q16 32 24 40" fill="none"/>
+              <path d="M16 12 Q24 20 16 28" fill="none" opacity="0.6"/>
+              <path d="M32 12 Q24 20 32 28" fill="none" opacity="0.6"/>
+            </svg>
+            <span class="text-amber-300/80 text-xs tracking-widest uppercase font-semibold">Latte Art</span>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-amber-950/70 via-transparent to-transparent"></div>
+        </div>
+        <div class="absolute inset-0 border border-amber-700/20 rounded-2xl group-hover:border-amber-500/40 transition-colors duration-300"></div>
+      </div>
+
+      <!-- Cell 4 -->
+      <div class="rounded-2xl overflow-hidden relative cursor-pointer group" style="min-height: 200px;" role="listitem" aria-label="Coffee beans roasting">
+        <div class="w-full h-full" style="background: linear-gradient(45deg, #0f0500 0%, #2d1200 40%, #451a03 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+            <svg class="w-12 h-12 text-amber-600" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <ellipse cx="18" cy="24" rx="7" ry="10" transform="rotate(-20 18 24)"/>
+              <line x1="18" y1="14" x2="18" y2="34" transform="rotate(-20 18 24)"/>
+              <ellipse cx="32" cy="22" rx="6" ry="9" transform="rotate(15 32 22)"/>
+              <line x1="32" y1="13" x2="32" y2="31" transform="rotate(15 32 22)"/>
+            </svg>
+            <span class="text-amber-300/80 text-xs tracking-widest uppercase font-semibold">The Beans</span>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-amber-950/70 via-transparent to-transparent"></div>
+        </div>
+        <div class="absolute inset-0 border border-amber-700/20 rounded-2xl group-hover:border-amber-500/40 transition-colors duration-300"></div>
+      </div>
+
+      <!-- Cell 5 -->
+      <div class="rounded-2xl overflow-hidden relative cursor-pointer group" style="min-height: 200px;" role="listitem" aria-label="Outdoor seating area">
+        <div class="w-full h-full" style="background: linear-gradient(135deg, #78350f 0%, #92400e 40%, #d97706 100%);">
+          <div class="absolute inset-0 flex flex-col items-center justify-center gap-3 opacity-60 group-hover:opacity-80 transition-opacity duration-300">
+            <svg class="w-12 h-12 text-amber-200" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M8 24 L24 8 L40 24"/>
+              <path d="M4 24 L44 24"/>
+              <path d="M12 24 L12 44"/>
+              <path d="M36 24 L36 44"/>
+              <path d="M8 44 L40 44"/>
+              <path d="M20 32 L28 32 L28 44 L20 44 Z"/>
+            </svg>
+            <span class="text-amber-200/80 text-xs tracking-widest uppercase font-semibold">Our Terrace</span>
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-amber-950/50 via-transparent to-transparent"></div>
+        </div>
+        <div class="absolute inset-0 border border-amber-700/20 rounded-2xl group-hover:border-amber-500/40 transition-colors duration-300"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     CTA BANNER
+══════════════════════════════════════ -->
+<section class="py-24 px-6" aria-labelledby="cta-heading">
+  <div class="max-w-4xl mx-auto reveal">
+    <div class="glass rounded-3xl px-8 py-16 md:px-16 text-center relative overflow-hidden glow-gold"
+         style="background: linear-gradient(135deg, rgba(120,53,15,0.25) 0%, rgba(251,191,36,0.08) 50%, rgba(120,53,15,0.15) 100%); border-color: rgba(251,191,36,0.25);">
+      <!-- Decorative rings -->
+      <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full border border-amber-600/10 pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute -bottom-16 -left-16 w-48 h-48 rounded-full border border-amber-700/10 pointer-events-none" aria-hidden="true"></div>
+
+      <p class="text-amber-500/70 text-xs tracking-widest uppercase font-semibold mb-6">Monday to Sunday · 7am – 9pm</p>
+      <h2 id="cta-heading" class="font-display text-gold-gradient text-glow mb-6"
+          style="font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1;">
+        Your Morning<br/>Ritual Awaits
+      </h2>
+      <p class="text-amber-200/60 mb-10 max-w-md mx-auto leading-relaxed text-sm">
+        Join our community of coffee lovers. Order ahead, earn rewards, and start your day the way it deserves to start.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#menu" class="btn-primary" aria-label="Start your order">
+          <span>Start Your Order</span>
+        </a>
+        <a href="#contact" class="btn-outline" aria-label="Find our location">
+          Find Us
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     FOOTER
+══════════════════════════════════════ -->
+<footer id="contact" class="relative border-t border-amber-900/30 pt-20 pb-10 px-6" role="contentinfo">
+
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-4 gap-10 mb-16">
+
+      <!-- Brand -->
+      <div class="md:col-span-2">
+        <a href="#" class="flex items-center gap-3 mb-5 cursor-pointer w-fit" aria-label="Brew & Co home">
+          <div class="w-8 h-8 flex-shrink-0" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+              <circle cx="16" cy="16" r="15" stroke="#fbbf24" stroke-width="1.5"/>
+              <path d="M10 20 C10 14 13 10 16 10 C19 10 22 14 22 20" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <path d="M22 16 C24 15 26 16 26 18 C26 20 24 21 22 20" stroke="#fbbf24" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              <line x1="8" y1="22" x2="24" y2="22" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="font-display text-xl font-semibold tracking-wide text-gold-gradient">Brew & Co</span>
+        </a>
+        <p class="text-amber-200/50 text-sm leading-relaxed max-w-xs">
+          Specialty coffee shop dedicated to honoring the journey from farm to cup. Every sip is a story worth telling.
+        </p>
+
+        <!-- Socials -->
+        <div class="flex gap-4 mt-6" aria-label="Social media links">
+          <a href="#" class="w-9 h-9 glass rounded-lg flex items-center justify-center text-amber-400/70 hover:text-amber-300 hover:border-amber-500/40 transition-colors duration-200 cursor-pointer" aria-label="Instagram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 glass rounded-lg flex items-center justify-center text-amber-400/70 hover:text-amber-300 hover:border-amber-500/40 transition-colors duration-200 cursor-pointer" aria-label="Twitter / X">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 glass rounded-lg flex items-center justify-center text-amber-400/70 hover:text-amber-300 hover:border-amber-500/40 transition-colors duration-200 cursor-pointer" aria-label="Facebook">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hours -->
+      <div>
+        <h3 class="font-semibold text-amber-200 text-sm tracking-wide uppercase mb-5">Hours</h3>
+        <ul class="space-y-3 text-sm text-amber-200/50" role="list">
+          <li class="flex justify-between gap-4">
+            <span>Mon – Fri</span>
+            <span class="text-amber-400/70">7:00 – 21:00</span>
+          </li>
+          <li class="flex justify-between gap-4">
+            <span>Saturday</span>
+            <span class="text-amber-400/70">8:00 – 22:00</span>
+          </li>
+          <li class="flex justify-between gap-4">
+            <span>Sunday</span>
+            <span class="text-amber-400/70">8:00 – 20:00</span>
+          </li>
+          <li class="pt-2 border-t border-amber-900/30">
+            <span class="text-amber-500/50 text-xs italic">Happy Hour: 3pm – 5pm daily</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact / Location -->
+      <div>
+        <h3 class="font-semibold text-amber-200 text-sm tracking-wide uppercase mb-5">Find Us</h3>
+        <address class="not-italic space-y-3 text-sm text-amber-200/50">
+          <p class="flex gap-3 items-start">
+            <svg class="w-4 h-4 text-amber-500/70 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+            <span>42 Roast Lane, Oldtown<br/>New York, NY 10001</span>
+          </p>
+          <p class="flex gap-3 items-center">
+            <svg class="w-4 h-4 text-amber-500/70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+            <a href="tel:+12125550142" class="hover:text-amber-300 transition-colors duration-200 cursor-pointer">+1 (212) 555-0142</a>
+          </p>
+          <p class="flex gap-3 items-center">
+            <svg class="w-4 h-4 text-amber-500/70 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+            <a href="mailto:hello@brewandco.com" class="hover:text-amber-300 transition-colors duration-200 cursor-pointer">hello@brewandco.com</a>
+          </p>
+        </address>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-amber-900/30 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-amber-600/40">
+      <p>&copy; 2026 Brew & Co. All rights reserved.</p>
+      <div class="flex gap-6" role="list">
+        <a href="#" class="hover:text-amber-400/70 transition-colors duration-200 cursor-pointer" role="listitem">Privacy Policy</a>
+        <a href="#" class="hover:text-amber-400/70 transition-colors duration-200 cursor-pointer" role="listitem">Terms</a>
+        <a href="#" class="hover:text-amber-400/70 transition-colors duration-200 cursor-pointer" role="listitem">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════ -->
+<script>
+  // ── Navbar scroll effect ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  }, { passive: true });
+
+  // ── Mobile menu toggle ──
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const menuIconOpen = document.getElementById('menuIconOpen');
+  const menuIconClose = document.getElementById('menuIconClose');
+  let menuOpen = false;
+
+  menuBtn.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('hidden', !menuOpen);
+    menuIconOpen.classList.toggle('hidden', menuOpen);
+    menuIconClose.classList.toggle('hidden', !menuOpen);
+    menuBtn.setAttribute('aria-expanded', menuOpen.toString());
+  });
+
+  // Close mobile menu when a link is clicked
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu.classList.add('hidden');
+      menuIconOpen.classList.remove('hidden');
+      menuIconClose.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // ── Scroll reveal ──
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // Stagger children slightly
+        entry.target.style.transitionDelay = `${i * 0.05}s`;
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── Add to cart feedback ──
+  document.querySelectorAll('button[aria-label^="Add"]').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const span = this.querySelector('span');
+      const original = span.textContent;
+      span.textContent = '✓';
+      this.style.background = 'linear-gradient(135deg, #16a34a, #15803d)';
+      setTimeout(() => {
+        span.textContent = original;
+        this.style.background = '';
+      }, 1200);
+    });
+  });
+</script>
+
+</body>
+</html>
