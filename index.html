@@ -326,8 +326,26 @@
     .case-card__label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
     .case-card__result { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; }
     .case-card__text { font-size: 14px; color: var(--muted); }
-    .case-card--soon { display: flex; align-items: center; justify-content: center; min-height: 300px; text-align: center; flex-direction: column; padding: 48px 24px; }
-    .cases__total { margin-top: 56px; text-align: center; font-size: clamp(28px, 5vw, 48px); font-weight: 900; }
+    .case-card--tg { display: flex; align-items: stretch; }
+    .case-card__body--tg {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 4px;
+      padding: 32px 24px;
+      min-height: 280px;
+    }
+    .case-card__tg-icon { width: 40px; height: 40px; margin-bottom: 16px; flex-shrink: 0; }
+    .case-card__tg-link {
+      font-size: 20px;
+      font-weight: 800;
+      color: #b8873f;
+      text-decoration: none;
+      line-height: 1.25;
+      transition: opacity .2s;
+    }
+    .case-card__tg-link:hover { opacity: .75; }
 
     /* ━━━ WHY ━━━ */
     .why { background: var(--bg2); }
@@ -572,8 +590,8 @@
         <div class="placeholder-img case-card__img">Скриншот 1</div>
         <div class="case-card__body">
           <div class="case-card__label">Кейс 1</div>
-          <div class="case-card__result">$2&nbsp;400 в первый месяц</div>
-          <p class="case-card__text">До: без опыта. Запустили модель → $2&nbsp;400 в первый месяц. Вторая модель → $5&nbsp;600 за месяц.</p>
+          <div class="case-card__result">$5&nbsp;600 в первый месяц</div>
+          <p class="case-card__text">До: без опыта. Запустили модель → $5&nbsp;600 в первый месяц. Вторая модель → ещё больше.</p>
         </div>
       </div>
       <div class="case-card">
@@ -584,13 +602,16 @@
           <p class="case-card__text">До: модель с вебкама $3&nbsp;000–$6&nbsp;000/мес. После программы → $13&nbsp;500 за следующий месяц.</p>
         </div>
       </div>
-      <div class="case-card case-card--soon">
-        <div style="font-size:40px;margin-bottom:16px;">⏳</div>
-        <div class="case-card__result">Скоро</div>
-        <p class="case-card__text mt-12">Следующий кейс появится совсем скоро</p>
+      <div class="case-card case-card--tg">
+        <div class="case-card__body case-card__body--tg">
+          <svg class="case-card__tg-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.773l-1.904 8.978c-.144.637-.516.793-1.046.494l-2.9-2.137-1.4 1.348c-.154.154-.284.284-.583.284l.209-2.95 5.38-4.862c.234-.208-.051-.324-.363-.116L7.5 14.58l-2.853-.893c-.62-.194-.632-.62.13-.918l11.146-4.297c.517-.188.97.126.807.901z" fill="#b8873f"/>
+          </svg>
+          <a class="case-card__tg-link" href="#" onclick="openTg(event)">Больше кейсов в моём Telegram</a>
+          <p class="case-card__text" style="margin-top:10px;">а также в каналах других коллег из сферы</p>
+        </div>
       </div>
     </div>
-    <div class="cases__total">Суммарно ученики заработали <span class="accent">$1&nbsp;000&nbsp;000+</span></div>
   </div>
 </section>
 
