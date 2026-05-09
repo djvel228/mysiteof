@@ -349,6 +349,22 @@
     .tariff-card--popular .tariff-card__btn:hover {
       box-shadow: 0 8px 28px rgba(0,0,0,.4);
     }
+    .spots-badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 5px 16px;
+      background: rgba(0,0,0,.18);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #000;
+      letter-spacing: .03em;
+      animation: spots-pulse 1.2s ease-in-out infinite;
+    }
+    @keyframes spots-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
     .tariff-badge {
       position: absolute;
       top: -14px;
@@ -797,6 +813,7 @@
           <li><span class="chk">✓</span><span>Аудиты ваших страниц от моей команды</span></li>
         </ul>
         <a href="https://t.me/alexeevonlyy" target="_blank" rel="noopener noreferrer" class="tariff-card__btn">Выбрать</a>
+        <div style="text-align:center;"><span class="spots-badge">Только 10 мест</span></div>
       </div>
 
       <!-- Card 3: Индивидуальная работа -->
