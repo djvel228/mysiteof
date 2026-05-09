@@ -305,7 +305,7 @@
       align-items: start;
     }
     @media (min-width: 900px) {
-      .tariffs__grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
+      .tariffs__grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
     }
     .tariff-card {
       background: #141414;
@@ -315,6 +315,8 @@
       position: relative;
       display: flex;
       flex-direction: column;
+      min-height: 600px;
+      box-sizing: border-box;
     }
     .tariff-card--popular {
       border: 2px solid var(--accent);
