@@ -872,23 +872,23 @@
     bottom: 24px;
     right: 24px;
     z-index: 9999;
-    background: #141414;
+    background: #b8873f;
     border: 1px solid #b8873f;
     border-radius: 16px;
     padding: 16px 20px;
-    box-shadow: 0 4px 24px rgba(184,135,63,.2);
+    box-shadow: 0 4px 24px rgba(184,135,63,.3);
     text-align: center;
     min-width: 210px;
     pointer-events: none;
   }
   #fw-label-top, #fw-label-bottom {
-    color: #888888;
+    color: #000000;
     font-size: 12px;
     font-family: 'Inter', sans-serif;
     line-height: 1.45;
   }
   #fw-counter {
-    color: #b8873f;
+    color: #000000;
     font-size: 32px;
     font-weight: 800;
     font-family: 'Inter', sans-serif;
@@ -939,11 +939,11 @@
   }
 
   function tick() {
-    target += Math.floor(Math.random() * (183 - 47 + 1)) + 47;
+    target += Math.floor(Math.random() * (47 - 15 + 1)) + 15;
     animateTo(target);
   }
 
-  setInterval(tick, 1000);
+  setInterval(tick, 3000);
 })();
 </script>
 
