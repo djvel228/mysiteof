@@ -865,5 +865,87 @@
   });
 </script>
 
+<!-- ══ FLOATING WIDGET ══ -->
+<style>
+  #floating-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    background: #141414;
+    border: 1px solid #b8873f;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 4px 24px rgba(184,135,63,.2);
+    text-align: center;
+    min-width: 210px;
+    pointer-events: none;
+  }
+  #fw-label-top, #fw-label-bottom {
+    color: #888888;
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.45;
+  }
+  #fw-counter {
+    color: #b8873f;
+    font-size: 32px;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.2;
+    margin: 8px 0 6px;
+  }
+  @media (max-width: 640px) {
+    #floating-widget {
+      bottom: 12px;
+      right: 12px;
+      padding: 12px 16px;
+      min-width: 170px;
+      border-radius: 12px;
+    }
+    #fw-counter { font-size: 24px; }
+  }
+</style>
+<div id="floating-widget">
+  <div id="fw-label-top">Столько ты мог бы уже заработать:</div>
+  <div id="fw-counter">$0</div>
+  <div id="fw-label-bottom">создав своё OF-агентство</div>
+</div>
+<script>
+(function() {
+  var current = 0;
+  var target = 0;
+  var el = document.getElementById('fw-counter');
+
+  function fmt(n) {
+    return '$' + Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  }
+
+  function animateTo(newTarget) {
+    var start = current;
+    var diff = newTarget - start;
+    var duration = 750;
+    var startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var p = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      current = start + diff * eased;
+      el.textContent = fmt(current);
+      if (p < 1) requestAnimationFrame(step);
+      else current = newTarget;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function tick() {
+    target += Math.floor(Math.random() * (183 - 47 + 1)) + 47;
+    animateTo(target);
+  }
+
+  setInterval(tick, 1000);
+})();
+</script>
+
 </body>
 </html>
