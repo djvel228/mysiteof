@@ -913,9 +913,12 @@
 </div>
 <script>
 (function() {
-  var current = 0;
-  var target = 0;
+  var saved = parseFloat(localStorage.getItem('earningsCounter')) || 0;
+  var current = saved;
+  var target = saved;
   var el = document.getElementById('fw-counter');
+
+  el.textContent = fmt(current);
 
   function fmt(n) {
     return '$' + Math.floor(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -932,8 +935,12 @@
       var eased = 1 - Math.pow(1 - p, 3);
       current = start + diff * eased;
       el.textContent = fmt(current);
-      if (p < 1) requestAnimationFrame(step);
-      else current = newTarget;
+      if (p < 1) {
+        requestAnimationFrame(step);
+      } else {
+        current = newTarget;
+        localStorage.setItem('earningsCounter', newTarget);
+      }
     }
     requestAnimationFrame(step);
   }
