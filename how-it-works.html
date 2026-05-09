@@ -268,8 +268,8 @@
     .forwhom__col--no  .forwhom__col-label { color: #f87171; }
     .forwhom__list { display: flex; flex-direction: column; gap: 14px; list-style: none; }
     .forwhom__list li { display: flex; align-items: flex-start; gap: 12px; font-size: 15px; color: #d0d0d0; }
-    .forwhom__col--yes .forwhom__list li::before { content: '✅'; flex-shrink: 0; margin-top: 2px; }
-    .forwhom__col--no  .forwhom__list li::before { content: '❌'; flex-shrink: 0; margin-top: 2px; }
+    .forwhom__col--yes .forwhom__list li::before { content: none; }
+    .forwhom__col--no  .forwhom__list li::before { content: none; }
 
     /* ━━━ VIDEO HERO CTA ━━━ */
     .video-hero__cta { display: flex; justify-content: center; margin-top: 32px; }
@@ -581,24 +581,23 @@
 <!-- ══ FOR WHO ══ -->
 <section class="forwhom">
   <div class="container">
-    <span class="section-label">Для кого</span>
-    <h2>Программа для тебя если</h2>
+    <h2>Программа подойдёт для тебя если:</h2>
     <div class="forwhom__grid">
       <div class="forwhom__col forwhom__col--yes">
         <div class="forwhom__col-label">Подойдёт</div>
         <ul class="forwhom__list">
-          <li>Готов уделять 2–3 часа в день</li>
-          <li>Хочешь построить стабильный онлайн-бизнес</li>
-          <li>Хочешь зарабатывать из любой точки мира</li>
-          <li>Готов работать системно</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✓</span>Хочешь перемен в жизни</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✓</span>Освоить новый перспективный онлайн бизнес</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✓</span>Хочешь зарабатывать из любой точки мира</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✓</span>Хочешь финансовой свободы и независимости</li>
         </ul>
       </div>
       <div class="forwhom__col forwhom__col--no">
         <div class="forwhom__col-label">Не подойдёт</div>
         <ul class="forwhom__list">
-          <li>Ищешь лёгкие деньги без усилий</li>
-          <li>Не готов к системной работе</li>
-          <li>Хочешь результат без вложения времени</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✗</span>Ищешь лёгкие деньги без усилий</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✗</span>Хочешь результат без вложения времени</li>
+          <li><span style="color:#b8873f;font-weight:700;margin-right:4px;">✗</span>Боишься коммуницировать с людьми</li>
         </ul>
       </div>
     </div>
