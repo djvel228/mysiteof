@@ -317,8 +317,9 @@
       flex-direction: column;
     }
     .tariff-card--popular {
-      border-width: 2px;
-      box-shadow: 0 0 56px rgba(184,135,63,.18);
+      border: 2px solid var(--accent);
+      background: linear-gradient(160deg, #1c1400 0%, #141414 60%);
+      box-shadow: 0 0 60px rgba(184,135,63,.2), inset 0 0 40px rgba(184,135,63,.04);
       padding: 64px 36px 48px;
     }
     .tariff-badge {
@@ -382,13 +383,17 @@
       margin-top: 5px;
     }
     .tariff-card__name {
-      font-size: 20px;
-      font-weight: 800;
+      font-size: clamp(32px, 4vw, 42px);
+      font-weight: 900;
       color: #ffffff;
+      line-height: 1.1;
       margin-bottom: 20px;
     }
     .tariff-card__name--lg {
-      font-size: 24px;
+      font-size: clamp(36px, 4.5vw, 48px);
+    }
+    .tariff-card__name--gold {
+      color: var(--accent);
     }
     .tariff-card__old-price {
       font-size: 17px;
@@ -736,7 +741,7 @@
       <!-- Card 2: OnlyFans Group -->
       <div class="tariff-card tariff-card--popular">
         <div class="tariff-badge">ПОПУЛЯРНЫЙ</div>
-        <div class="tariff-card__name">OnlyFans Group</div>
+        <div class="tariff-card__name tariff-card__name--gold">OnlyFans Group</div>
         <div class="tariff-card__old-price-row">
           <span class="tariff-card__old-price">$1 900</span>
           <span class="tariff-sale-badge">СКИДКА</span>
