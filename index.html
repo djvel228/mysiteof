@@ -446,9 +446,46 @@
       transition: transform .3s, background .2s; font-size: 14px; color: var(--accent);
     }
     .accordion.is-open .accordion__icon { transform: rotate(45deg); background: rgba(184,135,63,.25); }
-    .accordion__body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
-    .accordion.is-open .accordion__body { max-height: 300px; }
+    .accordion__body { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+    .accordion.is-open .accordion__body { max-height: 500px; }
     .accordion__content { padding: 16px 24px 24px; color: var(--muted); font-size: 15px; line-height: 1.7; border-top: 1px solid var(--border); }
+    .accordion__bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .accordion__bullets li {
+      font-size: 14px;
+      color: var(--muted);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .accordion__bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 7px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .7;
+    }
+    .accordion__bullets li.gold {
+      color: #b8873f;
+      font-weight: 700;
+    }
+    .accordion__bullets li.gold::before { opacity: 1; }
+
+    /* pulse dot for bonus accordion */
+    .pulse-dot {
+      display: inline-block;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: #b8873f;
+      margin-right: 10px;
+      flex-shrink: 0;
+      animation: pulse-gold 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse-gold {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(184,135,63,.7); opacity: 1; }
+      50%       { box-shadow: 0 0 0 6px rgba(184,135,63,0); opacity: .7; }
+    }
 
     /* ━━━ PERSONAL ━━━ */
     .personal__sub { color: var(--muted); font-size: 17px; margin-top: 14px; max-width: 580px; }
@@ -755,28 +792,92 @@
 <section class="program">
   <div class="container">
     <span class="section-label">Программа</span>
-    <h2>Что входит в программу</h2>
+    <h2>Я приглашаю тебя на мою программу <span style="color:#b8873f;font-weight:800;">OnlyFans Agency Education</span></h2>
     <div class="accordion-list">
+
       <div class="accordion">
         <button class="accordion__trigger" aria-expanded="false"><span>Блок 1. Поиск модели</span><span class="accordion__icon">+</span></button>
-        <div class="accordion__body"><div class="accordion__content">Где искать модели, как вести переговоры, как заключать договорённости которые защищают тебя. Разбираем топовые площадки, скрипты переговоров и типичные ошибки на старте.</div></div>
+        <div class="accordion__body"><div class="accordion__content">
+          <ul class="accordion__bullets">
+            <li>Каналы поиска моделей</li>
+            <li>Как и какую модель выбрать</li>
+            <li>Покупка модельного контракта</li>
+            <li>Заключение договорённостей</li>
+          </ul>
+        </div></div>
       </div>
+
       <div class="accordion">
         <button class="accordion__trigger" aria-expanded="false"><span>Блок 2. Безопасность и регистрация</span><span class="accordion__icon">+</span></button>
-        <div class="accordion__body"><div class="accordion__content">Безопасная работа, регистрация страниц на OnlyFans и Fansly, настройка выводов. Как защитить себя и модель с юридической и технической стороны.</div></div>
+        <div class="accordion__body"><div class="accordion__content">
+          <ul class="accordion__bullets">
+            <li>Юридическая безопасность</li>
+            <li>Настройка OnlyMonster</li>
+            <li>Регистрация страниц</li>
+            <li>Создание платёжных систем</li>
+            <li>Настройка выводов</li>
+          </ul>
+        </div></div>
       </div>
+
       <div class="accordion">
         <button class="accordion__trigger" aria-expanded="false"><span>Блок 3. Оформление и контент</span><span class="accordion__icon">+</span></button>
-        <div class="accordion__body"><div class="accordion__content">Образ и запаковка модели, специфика контента, планирование, создание контента с помощью AI. Как сделать так чтобы профиль выглядел профессионально и конвертировал посетителей в платящих подписчиков.</div></div>
+        <div class="accordion__body"><div class="accordion__content">
+          <ul class="accordion__bullets">
+            <li>Образ и запаковка модели</li>
+            <li>Специфика контента</li>
+            <li>Оформление страницы</li>
+            <li>Планирование и работа с контентом</li>
+            <li class="gold">Создание контента с AI</li>
+          </ul>
+        </div></div>
       </div>
+
       <div class="accordion">
         <button class="accordion__trigger" aria-expanded="false"><span>Блок 4. Найм команды</span><span class="accordion__icon">+</span></button>
-        <div class="accordion__body"><div class="accordion__content">Стратегия найма: ассистент, секстер, тимлид — как выстроить команду с нуля. Скрипты найма, управление, мотивация, как не получить команду которая тормозит рост.</div></div>
+        <div class="accordion__body"><div class="accordion__content">
+          <ul class="accordion__bullets">
+            <li>Стратегия найма команды</li>
+            <li>Найм секстера</li>
+            <li>Найм тимлида</li>
+            <li>Найм контент-менеджера</li>
+          </ul>
+        </div></div>
       </div>
+
       <div class="accordion">
         <button class="accordion__trigger" aria-expanded="false"><span>Блок 5. Трафик</span><span class="accordion__icon">+</span></button>
-        <div class="accordion__body"><div class="accordion__content">Instagram, TikTok, YouTube, Reddit, Adult Traffic — полная система привлечения подписчиков. Какие каналы работают для каждого типа модели, бюджеты, автоматизация, масштабирование.</div></div>
+        <div class="accordion__body"><div class="accordion__content">
+          <ul class="accordion__bullets">
+            <li>Все о трафике</li>
+            <li>SFS</li>
+            <li>GG</li>
+            <li>Instagram</li>
+            <li>Reddit</li>
+            <li>Twitter</li>
+            <li>YouTube</li>
+            <li>Adult Site</li>
+          </ul>
+        </div></div>
       </div>
+
+      <div class="accordion">
+        <button class="accordion__trigger" aria-expanded="false">
+          <span style="display:flex;align-items:center;"><span class="pulse-dot"></span>Бонусный блок — «Базовый курс по секстингу»</span>
+          <span class="accordion__icon">+</span>
+        </button>
+        <div class="accordion__body"><div class="accordion__content">
+          <ul class="accordion__bullets">
+            <li>Теория</li>
+            <li>Организация работы</li>
+            <li>Правила секстинга</li>
+            <li>Инструменты продаж</li>
+            <li>Структура и этапы секстинга</li>
+            <li>И др.</li>
+          </ul>
+        </div></div>
+      </div>
+
     </div>
   </div>
 </section>
