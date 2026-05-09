@@ -318,9 +318,34 @@
     }
     .tariff-card--popular {
       border: 2px solid var(--accent);
-      background: linear-gradient(160deg, #1c1400 0%, #141414 60%);
-      box-shadow: 0 0 60px rgba(184,135,63,.2), inset 0 0 40px rgba(184,135,63,.04);
+      background: var(--accent);
+      box-shadow: 0 0 60px rgba(184,135,63,.4);
       padding: 64px 36px 48px;
+    }
+    .tariff-card--popular .tariff-card__name--gold { color: #000; }
+    .tariff-card--popular .tariff-card__old-price { color: rgba(0,0,0,.5); }
+    .tariff-card--popular .tariff-card__price { color: #000; }
+    .tariff-card--popular .tariff-card__divider { background: rgba(0,0,0,.2); }
+    .tariff-card--popular .tariff-card__list li { color: #000; }
+    .tariff-card--popular .tariff-card__list li .chk { color: #000; }
+    .tariff-card--popular .tariff-card__sub-list li { color: rgba(0,0,0,.7); }
+    .tariff-card--popular .tariff-card__sub-list li::before { background: #000; }
+    .tariff-card--popular .tariff-sale-badge {
+      background: rgba(0,0,0,.15);
+      border-color: rgba(0,0,0,.25);
+      color: #000;
+    }
+    .tariff-card--popular .tariff-badge {
+      background: #000;
+      color: #ffffff;
+    }
+    .tariff-card--popular .tariff-card__btn {
+      background: #000;
+      color: #ffffff;
+      box-shadow: none;
+    }
+    .tariff-card--popular .tariff-card__btn:hover {
+      box-shadow: 0 8px 28px rgba(0,0,0,.4);
     }
     .tariff-badge {
       position: absolute;
@@ -390,7 +415,7 @@
       margin-bottom: 20px;
     }
     .tariff-card__name--lg {
-      font-size: clamp(36px, 4.5vw, 48px);
+      font-size: clamp(32px, 4vw, 42px);
     }
     .tariff-card__name--gold {
       color: var(--accent);
