@@ -336,18 +336,50 @@
       padding: 5px 16px;
       white-space: nowrap;
     }
+    .tariff-card__old-price-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
     .tariff-sale-badge {
       display: inline-block;
       background: rgba(184,135,63,.15);
       border: 1px solid rgba(184,135,63,.4);
       color: var(--accent);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
-      letter-spacing: .08em;
+      letter-spacing: .07em;
       text-transform: uppercase;
       border-radius: 100px;
-      padding: 3px 12px;
-      margin-bottom: 12px;
+      padding: 2px 9px;
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+    .tariff-card__sub-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-top: 6px;
+      padding-left: 4px;
+    }
+    .tariff-card__sub-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 12px;
+      color: #aaaaaa;
+      line-height: 1.45;
+    }
+    .tariff-card__sub-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .8;
+      margin-top: 5px;
     }
     .tariff-card__name {
       font-size: 18px;
@@ -670,12 +702,27 @@
       <!-- Card 1: Самозапуск -->
       <div class="tariff-card">
         <div class="tariff-card__name">Самозапуск</div>
-        <div class="tariff-sale-badge">СКИДКА</div>
-        <div class="tariff-card__old-price">$799</div>
+        <div class="tariff-card__old-price-row">
+          <span class="tariff-card__old-price">$799</span>
+          <span class="tariff-sale-badge">СКИДКА</span>
+        </div>
         <div class="tariff-card__price">$599</div>
         <div class="tariff-card__divider"></div>
         <ul class="tariff-card__list">
-          <li><span class="chk">✓</span><span>Доступ к программе: Блок 1. Поиск модели, Блок 2. Безопасность и регистрация, Блок 3. Оформление и контент, Блок 4. Найм команды, Блок 5. Трафик, Бонусный блок. Базовый курс по секстингу</span></li>
+          <li>
+            <span class="chk">✓</span>
+            <span>
+              Доступ к программе:
+              <ul class="tariff-card__sub-list">
+                <li>Блок 1. Поиск модели</li>
+                <li>Блок 2. Безопасность и регистрация</li>
+                <li>Блок 3. Оформление и контент</li>
+                <li>Блок 4. Найм команды</li>
+                <li>Блок 5. Трафик</li>
+                <li>Бонусный блок. Базовый курс по секстингу</li>
+              </ul>
+            </span>
+          </li>
           <li><span class="chk">✓</span><span>Доступ к закрытому чату учеников</span></li>
           <li><span class="chk">✓</span><span>Поддержка в чате</span></li>
           <li><span class="chk">✓</span><span>Вводный созвон</span></li>
@@ -688,15 +735,30 @@
       <div class="tariff-card tariff-card--popular">
         <div class="tariff-badge">ПОПУЛЯРНЫЙ</div>
         <div class="tariff-card__name">OnlyFans Group</div>
-        <div class="tariff-sale-badge">СКИДКА</div>
-        <div class="tariff-card__old-price">$1 900</div>
+        <div class="tariff-card__old-price-row">
+          <span class="tariff-card__old-price">$1 900</span>
+          <span class="tariff-sale-badge">СКИДКА</span>
+        </div>
         <div class="tariff-card__price">$1 499</div>
         <div class="tariff-card__divider"></div>
         <ul class="tariff-card__list">
-          <li><span class="chk">✓</span><span>Доступ к программе: Блок 1. Поиск модели, Блок 2. Безопасность и регистрация, Блок 3. Оформление и контент, Блок 4. Найм команды, Блок 5. Трафик, Бонусный блок. Базовый курс по секстингу</span></li>
+          <li>
+            <span class="chk">✓</span>
+            <span>
+              Доступ к программе:
+              <ul class="tariff-card__sub-list">
+                <li>Блок 1. Поиск модели</li>
+                <li>Блок 2. Безопасность и регистрация</li>
+                <li>Блок 3. Оформление и контент</li>
+                <li>Блок 4. Найм команды</li>
+                <li>Блок 5. Трафик</li>
+                <li>Бонусный блок. Базовый курс по секстингу</li>
+              </ul>
+            </span>
+          </li>
           <li><span class="chk">✓</span><span>Доступ к закрытому чату агентств</span></li>
           <li><span class="chk">✓</span><span>Еженедельные эфиры в рамках программы</span></li>
-          <li><span class="chk">✓</span><span>Личная работа со мной</span></li>
+          <li><span class="chk">✓</span><span>Разборы и анализ страниц от меня</span></li>
           <li><span class="chk">✓</span><span>Аудиты ваших страниц от моей команды</span></li>
         </ul>
         <a href="https://t.me/alexeevonlyy" target="_blank" rel="noopener noreferrer" class="tariff-card__btn">Выбрать</a>
