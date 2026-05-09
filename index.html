@@ -429,6 +429,38 @@
       margin-bottom: 0;
     }
 
+    /* ━━━ CASE VIDEO ━━━ */
+    .case-video { background: transparent; }
+    .case-video__img-wrap {
+      width: 100%;
+      height: 220px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin: 40px 0 28px;
+    }
+    .case-video__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 15px;
+      transition: transform .4s ease;
+    }
+    .case-video__img-wrap:hover .case-video__img { transform: scale(1.04); }
+    .case-video__desc {
+      text-align: center;
+      color: #aaaaaa;
+      font-size: clamp(15px, 3.5vw, 17px);
+      line-height: 1.65;
+      max-width: 560px;
+      margin: 0 auto 36px;
+    }
+    .case-video__cta { text-align: center; }
+
     /* ━━━ PROGRAM ━━━ */
     .program { background: var(--bg2); }
     .accordion-list { margin-top: 48px; display: flex; flex-direction: column; gap: 12px; }
@@ -784,6 +816,20 @@
       <div class="why__card"><div class="why__icon">💵</div><h3>Доход в долларах</h3><p>Выплаты в USD, независимо от страны</p></div>
       <div class="why__card"><div class="why__icon">📍</div><h3>География не важна</h3><p>Агентство работает без офиса и без привязки к городу</p></div>
       <div class="why__card"><div class="why__icon">📈</div><h3>Ты сам управляешь доходом</h3><p>Нет потолка зарплаты, нет начальника</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BLOCK 7.5 — CASE VIDEO ══ -->
+<section class="case-video">
+  <div class="container">
+    <h2 style="font-size:clamp(24px,5vw,42px);font-weight:800;color:#ffffff;line-height:1.2;margin-bottom:0;">Как это работает на практике?</h2>
+    <div class="case-video__img-wrap">
+      <div class="case-video__img placeholder-img">Видео-разбор кейса</div>
+    </div>
+    <p class="case-video__desc">Нажми на кнопку ниже чтобы посмотреть разбор кейса моих учеников</p>
+    <div class="case-video__cta">
+      <a href="how-it-works.html" class="btn btn-primary btn-lg">Перейти к видео-разбору</a>
     </div>
   </div>
 </section>
