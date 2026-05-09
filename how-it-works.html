@@ -304,24 +304,22 @@
       margin-top: 48px;
       align-items: start;
     }
-    @media (min-width: 640px) {
-      .tariffs__grid { grid-template-columns: 1fr 1fr; align-items: center; }
+    @media (min-width: 900px) {
+      .tariffs__grid { grid-template-columns: repeat(3, 1fr); align-items: start; }
     }
     .tariff-card {
-      background: var(--bg3);
-      border: 1px solid rgba(184,135,63,.35);
+      background: #141414;
+      border: 1px solid var(--accent);
       border-radius: 16px;
       padding: 36px 28px;
       position: relative;
       display: flex;
       flex-direction: column;
-      gap: 0;
     }
-    .tariff-card--vip {
-      border-color: var(--accent);
+    .tariff-card--popular {
       border-width: 2px;
-      box-shadow: 0 0 40px rgba(184,135,63,.12);
-      padding: 44px 32px;
+      box-shadow: 0 0 48px rgba(184,135,63,.15);
+      padding: 52px 28px 36px;
     }
     .tariff-badge {
       position: absolute;
@@ -338,25 +336,44 @@
       padding: 5px 16px;
       white-space: nowrap;
     }
-    .tariff-card__name {
-      font-size: 14px;
-      font-weight: 700;
+    .tariff-sale-badge {
+      display: inline-block;
+      background: rgba(184,135,63,.15);
+      border: 1px solid rgba(184,135,63,.4);
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
-      color: var(--accent);
+      border-radius: 100px;
+      padding: 3px 12px;
+      margin-bottom: 12px;
+    }
+    .tariff-card__name {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
       margin-bottom: 16px;
     }
-    .tariff-card__price {
-      font-size: clamp(36px, 6vw, 52px);
-      font-weight: 900;
-      color: #ffffff;
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .tariff-card__price-note {
-      font-size: 13px;
+    .tariff-card__old-price {
+      font-size: 16px;
       color: var(--muted);
-      margin-bottom: 28px;
+      text-decoration: line-through;
+      margin-bottom: 4px;
+    }
+    .tariff-card__price {
+      font-size: clamp(38px, 6vw, 52px);
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .tariff-card__personal-text {
+      font-size: 16px;
+      color: #cccccc;
+      line-height: 1.65;
+      margin-bottom: 32px;
+      flex: 1;
     }
     .tariff-card__divider {
       height: 1px;
@@ -375,19 +392,16 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 15px;
-      color: #d8d8d8;
-      line-height: 1.45;
+      font-size: 14px;
+      color: #d0d0d0;
+      line-height: 1.5;
     }
-    .tariff-card__list li::before {
-      content: '';
+    .tariff-card__list li .chk {
       flex-shrink: 0;
-      width: 18px; height: 18px;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 15px;
       margin-top: 1px;
-      border-radius: 50%;
-      background:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6l3 3 5-5' stroke='%23000' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 10px no-repeat,
-        linear-gradient(135deg, %23b8873f, %23d4a855);
     }
     .tariff-card__btn {
       display: flex;
@@ -653,34 +667,47 @@
     <h2>Выбери свой формат</h2>
     <div class="tariffs__grid">
 
-      <!-- Card 1: Стандарт -->
+      <!-- Card 1: Самозапуск -->
       <div class="tariff-card">
-        <div class="tariff-card__name">Стандарт</div>
-        <div class="tariff-card__price">—</div>
-        <div class="tariff-card__price-note">Уточните стоимость в Telegram</div>
+        <div class="tariff-card__name">Самозапуск</div>
+        <div class="tariff-sale-badge">СКИДКА</div>
+        <div class="tariff-card__old-price">$799</div>
+        <div class="tariff-card__price">$599</div>
         <div class="tariff-card__divider"></div>
         <ul class="tariff-card__list">
-          <li>Доступ к программе</li>
-          <li>Поддержка в чате</li>
-          <li>Закрытый чат агентств</li>
+          <li><span class="chk">✓</span><span>Доступ к программе: Блок 1. Поиск модели, Блок 2. Безопасность и регистрация, Блок 3. Оформление и контент, Блок 4. Найм команды, Блок 5. Трафик, Бонусный блок. Базовый курс по секстингу</span></li>
+          <li><span class="chk">✓</span><span>Доступ к закрытому чату учеников</span></li>
+          <li><span class="chk">✓</span><span>Поддержка в чате</span></li>
+          <li><span class="chk">✓</span><span>Вводный созвон</span></li>
+          <li><span class="chk">✓</span><span>Одна бесплатная консультация</span></li>
         </ul>
         <a href="https://t.me/alexeevonlyy" target="_blank" rel="noopener noreferrer" class="tariff-card__btn">Выбрать</a>
       </div>
 
-      <!-- Card 2: VIP -->
-      <div class="tariff-card tariff-card--vip">
+      <!-- Card 2: OnlyFans Group -->
+      <div class="tariff-card tariff-card--popular">
         <div class="tariff-badge">ПОПУЛЯРНЫЙ</div>
-        <div class="tariff-card__name">VIP</div>
-        <div class="tariff-card__price">—</div>
-        <div class="tariff-card__price-note">Уточните стоимость в Telegram</div>
+        <div class="tariff-card__name">OnlyFans Group</div>
+        <div class="tariff-sale-badge">СКИДКА</div>
+        <div class="tariff-card__old-price">$1 900</div>
+        <div class="tariff-card__price">$1 499</div>
         <div class="tariff-card__divider"></div>
         <ul class="tariff-card__list">
-          <li>Всё из Стандарт</li>
-          <li>Личное сопровождение Валерия</li>
-          <li>Разборы страниц и секстингов</li>
-          <li>Контакты подрядчиков</li>
+          <li><span class="chk">✓</span><span>Доступ к программе: Блок 1. Поиск модели, Блок 2. Безопасность и регистрация, Блок 3. Оформление и контент, Блок 4. Найм команды, Блок 5. Трафик, Бонусный блок. Базовый курс по секстингу</span></li>
+          <li><span class="chk">✓</span><span>Доступ к закрытому чату агентств</span></li>
+          <li><span class="chk">✓</span><span>Еженедельные эфиры в рамках программы</span></li>
+          <li><span class="chk">✓</span><span>Личная работа со мной</span></li>
+          <li><span class="chk">✓</span><span>Аудиты ваших страниц от моей команды</span></li>
         </ul>
         <a href="https://t.me/alexeevonlyy" target="_blank" rel="noopener noreferrer" class="tariff-card__btn">Выбрать</a>
+      </div>
+
+      <!-- Card 3: Личная работа -->
+      <div class="tariff-card">
+        <div class="tariff-card__name">Личная работа</div>
+        <div class="tariff-card__divider"></div>
+        <p class="tariff-card__personal-text">Индивидуальная работа со мной. Стоимость и сроки обсуждаем лично.</p>
+        <a href="https://t.me/alexeevonlyy" target="_blank" rel="noopener noreferrer" class="tariff-card__btn">Написать в Telegram</a>
       </div>
 
     </div>
