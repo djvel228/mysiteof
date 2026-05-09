@@ -375,15 +375,29 @@
       line-height: 1.4;
       margin-top: 24px;
     }
-    .system__steps { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 48px; }
-    @media (min-width: 768px) { .system__steps { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1100px) { .system__steps { grid-template-columns: repeat(4, 1fr); } }
-    .step-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; }
-    .step-card__num { font-size: 48px; font-weight: 900; color: var(--accent); opacity: .2; line-height: 1; margin-bottom: 12px; }
-    .step-card__title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .step-card__body  { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
-    .step-card__result { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent-light); background: rgba(184,135,63,.08); border-radius: 6px; padding: 10px 14px; }
-    .step-card__result::before { content: '→'; font-weight: 900; margin-top: 1px; }
+    .system__steps { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 48px; }
+    @media (min-width: 640px)  { .system__steps { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1100px) { .system__steps { grid-template-columns: repeat(5, 1fr); } }
+    .step-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 20px; }
+    .step-card__num { font-size: 40px; font-weight: 900; color: var(--accent); opacity: .2; line-height: 1; margin-bottom: 10px; }
+    .step-card__title { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+    .step-card__bullets { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .step-card__bullets li {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      padding-left: 16px;
+      position: relative;
+    }
+    .step-card__bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 7px;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: .7;
+    }
 
     /* ━━━ PROGRAM ━━━ */
     .program { background: var(--bg2); }
@@ -639,27 +653,52 @@
     <div class="system__steps">
       <div class="step-card">
         <div class="step-card__num">01</div>
-        <div class="step-card__title">Находишь модель</div>
-        <p class="step-card__body">Знаешь где искать, как вести переговоры и заключать договорённости</p>
-        <div class="step-card__result">Подписанная модель, готовая к запуску</div>
+        <div class="step-card__title">Поиск модели</div>
+        <ul class="step-card__bullets">
+          <li>Узнаешь все способы поиска модели, с готовыми инструкциями</li>
+          <li>Научишься выбирать прибыльный типаж модели</li>
+          <li>Построишь свою воронку найма моделей</li>
+          <li>Получишь список лучших надёжных маркетплейсов для покупки модельного контракта</li>
+        </ul>
       </div>
       <div class="step-card">
         <div class="step-card__num">02</div>
-        <div class="step-card__title">Запаковываешь</div>
-        <p class="step-card__body">Создаёшь образ, соцсети, страницу — модель становится медийным персонажем</p>
-        <div class="step-card__result">Готовый профиль который продаёт</div>
+        <div class="step-card__title">Упаковка</div>
+        <ul class="step-card__bullets">
+          <li>Получишь удобную схему онбординга модели</li>
+          <li>Научишься составлять продающее позиционирование</li>
+          <li>У тебя будет готовый контент план для старта</li>
+          <li>Поймёшь по каким ценам продавать контент</li>
+          <li>Узнаешь как правильно вести страницу и какой контент выкладывать</li>
+        </ul>
       </div>
       <div class="step-card">
         <div class="step-card__num">03</div>
-        <div class="step-card__title">Запускаешь трафик</div>
-        <p class="step-card__body">Instagram, TikTok, Reddit — система привлечения подписчиков которая работает</p>
-        <div class="step-card__result">Стабильный поток новых подписчиков</div>
+        <div class="step-card__title">Трафик</div>
+        <ul class="step-card__bullets">
+          <li>Узнаешь все о платных и бесплатных способах продвижения</li>
+          <li>Получишь инструкции запуска в Instagram, Reddit, Twitter, YouTube, Adult Site и др</li>
+          <li>Откроешь для себя проверенную базу подрядчиков по трафику</li>
+          <li>Поймёшь как правильно определять не работающие источники</li>
+        </ul>
       </div>
       <div class="step-card">
         <div class="step-card__num">04</div>
-        <div class="step-card__title">Монетизируешь</div>
-        <p class="step-card__body">Продаёшь контент в личке, выстраиваешь команду, масштабируешься</p>
-        <div class="step-card__result">Первые $3&nbsp;000–$5&nbsp;000 уже в первый месяц</div>
+        <div class="step-card__title">Команда</div>
+        <ul class="step-card__bullets">
+          <li>Получишь готовый алгоритм поиска секстеров</li>
+          <li>Узнаешь как выстроить воронку найма сотрудников</li>
+          <li>Сохранишь себе готовые инструкции для работы каждого сотрудника</li>
+          <li>Построишь мощную команду</li>
+        </ul>
+      </div>
+      <div class="step-card">
+        <div class="step-card__num">05</div>
+        <div class="step-card__title">Масштабирование</div>
+        <ul class="step-card__bullets">
+          <li>Узнаешь как масштабировать свой результат и выйти на $10.000 во второй месяц</li>
+          <li>Получишь пошаговый план по автоматизации процессов в агентстве</li>
+        </ul>
       </div>
     </div>
   </div>
