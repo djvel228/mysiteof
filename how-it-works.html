@@ -319,8 +319,6 @@
       height: 100%;
       min-width: 0;
       box-sizing: border-box;
-      word-break: break-word;
-      overflow-wrap: break-word;
     }
     .tariff-card--popular {
       border: 2px solid var(--accent);
@@ -432,14 +430,17 @@
       margin-top: 5px;
     }
     .tariff-card__name {
-      font-size: clamp(32px, 4vw, 42px);
+      font-size: clamp(24px, 3vw, 36px);
       font-weight: 900;
       color: #ffffff;
-      line-height: 1.1;
+      line-height: 1.15;
       margin-bottom: 20px;
+      hyphens: none;
+      overflow-wrap: normal;
+      word-break: normal;
     }
     .tariff-card__name--lg {
-      font-size: clamp(32px, 4vw, 42px);
+      font-size: clamp(24px, 3vw, 36px);
     }
     .tariff-card__name--gold {
       color: var(--accent);
