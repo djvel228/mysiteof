@@ -354,7 +354,7 @@
     @media (min-width: 1024px) { .why__grid { grid-template-columns: repeat(4, 1fr); } }
     .why__card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; transition: border-color .2s, transform .2s; }
     .why__card:hover { border-color: rgba(184,135,63,.4); transform: translateY(-4px); }
-    .why__icon { font-size: 32px; margin-bottom: 16px; }
+    .why__icon { width: 36px; height: 36px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
     .why__card h3 { font-size: 18px; margin-bottom: 10px; }
     .why__card p  { font-size: 14px; color: var(--muted); }
 
@@ -894,10 +894,43 @@
     <div class="placeholder-img why__stat-img">Статистика / График</div>
     <h2 class="why__subhead">Поэтому OnlyFans — лучший онлайн-бизнес прямо сейчас</h2>
     <div class="why__grid">
-      <div class="why__card"><div class="why__icon">🌍</div><h3>Рынок без потолка</h3><p>Потенциальная аудитория — 4 млрд человек</p></div>
-      <div class="why__card"><div class="why__icon">💵</div><h3>Доход в долларах</h3><p>Выплаты в USD, независимо от страны</p></div>
-      <div class="why__card"><div class="why__icon">📍</div><h3>География не важна</h3><p>Агентство работает без офиса и без привязки к городу</p></div>
-      <div class="why__card"><div class="why__icon">📈</div><h3>Ты сам управляешь доходом</h3><p>Нет потолка зарплаты, нет начальника</p></div>
+      <div class="why__card">
+        <div class="why__icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b8873f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3>Рынок без потолка</h3><p>Потенциальная аудитория — 4 млрд человек</p>
+      </div>
+      <div class="why__card">
+        <div class="why__icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b8873f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <h3>Доход в долларах</h3><p>Выплаты в USD, независимо от страны</p>
+      </div>
+      <div class="why__card">
+        <div class="why__icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b8873f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <h3>География не важна</h3><p>Агентство работает без офиса и без привязки к городу</p>
+      </div>
+      <div class="why__card">
+        <div class="why__icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#b8873f" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <h3>Ты сам управляешь доходом</h3><p>Нет потолка зарплаты, нет начальника</p>
+      </div>
     </div>
   </div>
 </section>
