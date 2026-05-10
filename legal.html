@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Правовая информация — OF Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #161616;
+      --text: #ffffff;
+      --muted: #9a9a9a;
+      --accent: #b8873f;
+      --accent-light: #d4a855;
+      --border: #222222;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Video background ── */
+    #bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      object-fit: cover;
+      opacity: 0.55;
+    }
+    #bg-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,10,0.45) 0%,
+        rgba(10,10,10,0.30) 50%,
+        rgba(10,10,10,0.50) 100%
+      );
+    }
+    .content-layer {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ── Layout ── */
+    .container {
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .site-header__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .site-header__logo {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .site-header__back {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .site-header__back:hover { color: var(--text); }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform .2s, opacity .2s;
+    }
+    .btn:hover { transform: translateY(-2px); opacity: .92; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Page headline ── */
+    .legal-hero {
+      padding: 64px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-hero__label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .legal-hero__title {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 900;
+      line-height: 1.15;
+    }
+
+    /* ── Legal sections ── */
+    .legal-section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .legal-section:last-of-type { border-bottom: none; }
+
+    .legal-section__title {
+      font-size: clamp(20px, 3vw, 26px);
+      font-weight: 800;
+      margin-bottom: 28px;
+      color: var(--accent);
+    }
+
+    .legal-block { margin-bottom: 24px; }
+    .legal-block:last-child { margin-bottom: 0; }
+
+    .legal-block__heading {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .legal-block p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 8px;
+    }
+    .legal-block p:last-child { margin-bottom: 0; }
+
+    .legal-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .legal-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .legal-list li::before {
+      content: '–';
+      color: var(--accent);
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+
+    .legal-link {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .legal-link:hover { text-decoration: underline; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 32px 0;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- ══ Video background ══ -->
+<video id="bg-video" autoplay muted loop playsinline>
+  <source src="цаыва.mp4" type="video/mp4" />
+</video>
+<div id="bg-overlay"></div>
+
+<div class="content-layer">
+
+  <!-- ══ Header ══ -->
+  <header class="site-header">
+    <div class="container" style="max-width:1200px;">
+      <div class="site-header__inner">
+        <a href="index.html" class="site-header__logo">OF Agency</a>
+        <a href="index.html" class="site-header__back">← На главную</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ Hero ══ -->
+  <section class="legal-hero">
+    <div class="container">
+      <div class="legal-hero__label">Документы</div>
+      <h1 class="legal-hero__title">Правовая информация</h1>
+    </div>
+  </section>
+
+  <!-- ══ Section 1: Privacy Policy ══ -->
+  <section class="legal-section">
+    <div class="container">
+      <h2 class="legal-section__title">Политика конфиденциальности</h2>
+
+      <div class="legal-block">
+        <p>Настоящая политика конфиденциальности регулирует порядок обработки персональных данных пользователей сайта.</p>
+        <p>Оператор персональных данных: Алексеев Валерий, самозанятый, Россия.</p>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Какие данные собираются:</div>
+        <ul class="legal-list">
+          <li>Данные которые вы добровольно предоставляете при обращении через Telegram</li>
+          <li>Данные об использовании сайта (cookie, IP-адрес) в аналитических целях</li>
+        </ul>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Как используются данные:</div>
+        <ul class="legal-list">
+          <li>Для связи с вами и предоставления услуг обучения</li>
+          <li>Для улучшения качества сайта</li>
+          <li>Данные не передаются третьим лицам</li>
+        </ul>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Хранение данных:</div>
+        <ul class="legal-list">
+          <li>Данные хранятся до момента вашего запроса на удаление</li>
+          <li>Для удаления данных напишите: <a href="https://t.me/alexeevonlyy_ass" target="_blank" rel="noopener noreferrer" class="legal-link">https://t.me/alexeevonlyy_ass</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Section 2: Public Offer ══ -->
+  <section class="legal-section">
+    <div class="container">
+      <h2 class="legal-section__title">Публичная оферта</h2>
+
+      <div class="legal-block">
+        <p>Настоящая оферта является официальным предложением Алексеева Валерия (далее – Исполнитель) на оказание образовательных услуг.</p>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Предмет договора:</div>
+        <p>Исполнитель оказывает услуги обучения по созданию диджитал агентства в рамках программы «Digital Agency Education».</p>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Стоимость и оплата:</div>
+        <ul class="legal-list">
+          <li>Стоимость услуг согласовывается индивидуально</li>
+          <li>Оплата производится на основании договорённости сторон</li>
+          <li>После оплаты доступ к программе предоставляется в течение 24 часов</li>
+        </ul>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Права и обязанности:</div>
+        <ul class="legal-list">
+          <li>Исполнитель обязуется предоставить доступ к обучающим материалам и поддержку в течение программы</li>
+          <li>Заказчик обязуется соблюдать правила программы и не передавать материалы третьим лицам</li>
+        </ul>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Возврат средств:</div>
+        <p>Возврат денежных средств не предусмотрен. Оплачивая услуги, заказчик подтверждает ознакомление с данным условием и своё согласие с ним.</p>
+      </div>
+
+      <div class="legal-block">
+        <div class="legal-block__heading">Контакт:</div>
+        <p><a href="https://t.me/alexeevonlyy_ass" target="_blank" rel="noopener noreferrer" class="legal-link">https://t.me/alexeevonlyy_ass</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Section 3: Disclaimer ══ -->
+  <section class="legal-section">
+    <div class="container">
+      <h2 class="legal-section__title">Отказ от ответственности</h2>
+
+      <div class="legal-block">
+        <p>Результаты обучения зависят от личных усилий каждого участника. Исполнитель не гарантирует конкретный уровень дохода. Все примеры доходов учеников являются индивидуальными результатами и не являются гарантией.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ Footer ══ -->
+  <footer class="footer">
+    <div class="container">
+      <p>© 2026 OF Agency — Валерий Алексеев. Все права защищены.</p>
+      <p style="margin-top:8px;"><a href="index.html">← На главную</a></p>
+    </div>
+  </footer>
+
+</div><!-- /content-layer -->
+
+</body>
+</html>
