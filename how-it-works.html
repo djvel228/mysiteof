@@ -727,6 +727,31 @@
       </div>
 
     </div>
+
+    <!-- Program last-updated badge -->
+    <div style="margin-top:28px;display:flex;align-items:center;gap:10px;">
+      <span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#ffffff;flex-shrink:0;animation:prog-blink 1.4s ease-in-out infinite;"></span>
+      <span style="font-size:15px;font-weight:600;color:#ffffff;letter-spacing:.01em;">Последнее обновление программы: <span id="program-updated-date" style="color:#ffffff;font-weight:700;"></span></span>
+    </div>
+    <style>
+      @keyframes prog-blink {
+        0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255,255,255,.7); }
+        50%       { opacity: .35; box-shadow: 0 0 0 5px rgba(255,255,255,0); }
+      }
+    </style>
+    <script>
+    (function() {
+      var base = new Date(2026, 6, 25);
+      var interval = 45;
+      var now = new Date();
+      var diffDays = Math.floor((now - base) / 86400000);
+      var steps = diffDays < 0 ? 0 : Math.floor(diffDays / interval);
+      var d = new Date(base.getTime() + steps * interval * 86400000);
+      var months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+      document.getElementById('program-updated-date').textContent = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    })();
+    </script>
+
   </div>
 </section>
 
