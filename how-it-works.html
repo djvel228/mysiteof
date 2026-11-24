@@ -608,6 +608,71 @@
       .bf-wrap, .bf-marquee__track, .tariff-card--pulse, .tariff-card--popular.tariff-card--pulse { animation: none; }
     }
 
+    /* ── BF countdown timer ── */
+    .bf-timer { margin-top: 28px; text-align: center; }
+    .bf-timer__label {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+    }
+    .bf-timer__grid {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 8px;
+    }
+    .bf-timer__cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      min-width: 78px;
+      padding: 16px 10px;
+      background: rgba(184,135,63,.07);
+      border: 1px solid rgba(184,135,63,.3);
+      border-radius: 14px;
+      box-shadow: 0 0 22px rgba(184,135,63,.1);
+    }
+    .bf-timer__num {
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 900;
+      line-height: 1;
+      color: #ffffff;
+      font-variant-numeric: tabular-nums;
+    }
+    .bf-timer__unit {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .bf-timer__sep {
+      display: flex;
+      align-items: center;
+      font-size: clamp(22px, 5vw, 34px);
+      font-weight: 900;
+      color: rgba(184,135,63,.55);
+      padding-bottom: 20px;
+      animation: bf-blink 1.2s step-start infinite;
+    }
+    @keyframes bf-blink { 50% { opacity: .25; } }
+    .bf-timer__ended {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent-light);
+      letter-spacing: .04em;
+    }
+    @media (max-width: 480px) {
+      .bf-timer__grid { gap: 5px; }
+      .bf-timer__cell { min-width: 64px; padding: 13px 6px; }
+      .bf-timer__sep { padding-bottom: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .bf-timer__sep { animation: none; } }
+
     /* ━━━ CTA FINAL ━━━ */
     .cta-final { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(184,135,63,.08) 0%, transparent 70%); text-align: center; padding: 100px 0; }
     .cta-final h2 { max-width: 700px; margin: 0 auto 20px; }
@@ -1044,6 +1109,58 @@
         </div><!-- /bf-body -->
       </div><!-- /bf-inner -->
     </div><!-- /bf-wrap -->
+
+    <!-- Black Friday countdown timer -->
+    <div class="bf-timer" id="bf-timer">
+      <div class="bf-timer__label">До конца акции осталось</div>
+      <div class="bf-timer__grid" id="bf-timer-grid">
+        <div class="bf-timer__cell"><span class="bf-timer__num" id="bf-dd">00</span><span class="bf-timer__unit" id="bf-dd-u">дней</span></div>
+        <div class="bf-timer__sep">:</div>
+        <div class="bf-timer__cell"><span class="bf-timer__num" id="bf-hh">00</span><span class="bf-timer__unit" id="bf-hh-u">часов</span></div>
+        <div class="bf-timer__sep">:</div>
+        <div class="bf-timer__cell"><span class="bf-timer__num" id="bf-mm">00</span><span class="bf-timer__unit" id="bf-mm-u">минут</span></div>
+        <div class="bf-timer__sep">:</div>
+        <div class="bf-timer__cell"><span class="bf-timer__num" id="bf-ss">00</span><span class="bf-timer__unit" id="bf-ss-u">секунд</span></div>
+      </div>
+    </div>
+    <script>
+    (function() {
+      // Дата окончания акции (МСК). Поменять здесь при необходимости:
+      var END = new Date('2026-11-30T23:59:59+03:00');
+      var grid = document.getElementById('bf-timer-grid');
+      var label = document.querySelector('#bf-timer .bf-timer__label');
+      function plural(n, f) {
+        var a = Math.abs(n) % 100, b = a % 10;
+        if (a > 10 && a < 20) return f[2];
+        if (b > 1 && b < 5) return f[1];
+        if (b === 1) return f[0];
+        return f[2];
+      }
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+      function set(id, v) { document.getElementById(id).textContent = v; }
+      function tick() {
+        var diff = END - new Date();
+        if (diff <= 0) {
+          grid.innerHTML = '<span class="bf-timer__ended">Акция завершена</span>';
+          label.textContent = '';
+          clearInterval(timer);
+          return;
+        }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor(diff % 86400000 / 3600000);
+        var m = Math.floor(diff % 3600000 / 60000);
+        var s = Math.floor(diff % 60000 / 1000);
+        set('bf-dd', pad(d)); set('bf-hh', pad(h)); set('bf-mm', pad(m)); set('bf-ss', pad(s));
+        set('bf-dd-u', plural(d, ['день','дня','дней']));
+        set('bf-hh-u', plural(h, ['час','часа','часов']));
+        set('bf-mm-u', plural(m, ['минута','минуты','минут']));
+        set('bf-ss-u', plural(s, ['секунда','секунды','секунд']));
+      }
+      tick();
+      var timer = setInterval(tick, 1000);
+    })();
+    </script>
+
   </div>
 </section>
 
