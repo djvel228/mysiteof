@@ -542,6 +542,72 @@
       box-shadow: 0 8px 32px rgba(184,135,63,.5);
     }
 
+    /* ━━━ BLACK FRIDAY ━━━ */
+    .bf-wrap {
+      position: relative;
+      margin-top: 48px;
+      padding: 2px;
+      border-radius: 24px;
+      background: linear-gradient(120deg, #8a5f26, #d4a855, #f0cf8e, #d4a855, #8a5f26);
+      background-size: 300% 300%;
+      animation: bf-border 7s ease infinite;
+      box-shadow: 0 0 40px rgba(184,135,63,.22);
+    }
+    @keyframes bf-border {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .bf-inner {
+      background: #0c0c0c;
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .bf-marquee {
+      background: linear-gradient(90deg, rgba(184,135,63,.18), rgba(184,135,63,.04), rgba(184,135,63,.18));
+      border-bottom: 1px solid rgba(184,135,63,.28);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 12px 0;
+    }
+    .bf-marquee__track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: bf-scroll 28s linear infinite;
+    }
+    .bf-marquee__track span {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      padding: 0 9px;
+      vertical-align: middle;
+    }
+    .bf-marquee__track .bf-dot { color: rgba(184,135,63,.5); }
+    .bf-marquee__track .bf-spark { color: #f0cf8e; }
+    @keyframes bf-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .bf-body { padding: 40px 32px 44px; }
+    .bf-body .tariffs__grid { margin-top: 0; }
+    @media (max-width: 600px) { .bf-body { padding: 28px 14px 32px; } }
+
+    .tariff-card--pulse { animation: card-pulse 2.6s ease-in-out infinite; }
+    @keyframes card-pulse {
+      0%, 100% { box-shadow: 0 0 18px rgba(184,135,63,.15); }
+      50%      { box-shadow: 0 0 34px 5px rgba(184,135,63,.42); }
+    }
+    .tariff-card--popular.tariff-card--pulse { animation: card-pulse-gold 2.6s ease-in-out infinite; }
+    @keyframes card-pulse-gold {
+      0%, 100% { box-shadow: 0 0 40px rgba(184,135,63,.4); }
+      50%      { box-shadow: 0 0 72px 8px rgba(184,135,63,.7); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bf-wrap, .bf-marquee__track, .tariff-card--pulse, .tariff-card--popular.tariff-card--pulse { animation: none; }
+    }
+
     /* ━━━ CTA FINAL ━━━ */
     .cta-final { background: radial-gradient(ellipse 80% 80% at 50% 50%, rgba(184,135,63,.08) 0%, transparent 70%); text-align: center; padding: 100px 0; }
     .cta-final h2 { max-width: 700px; margin: 0 auto 20px; }
@@ -880,16 +946,28 @@
   <div class="container">
     <span class="section-label">Форматы</span>
     <h2>Выбери свой формат</h2>
+
+    <div class="bf-wrap">
+      <div class="bf-inner">
+        <div class="bf-marquee">
+          <div class="bf-marquee__track" aria-hidden="true">
+            <span class="bf-spark">⚡</span><span>Black Friday</span><span class="bf-dot">·</span><span>Специальные цены до −27%</span><span class="bf-dot">·</span><span>Успей забронировать место</span><span class="bf-dot">·</span>
+            <span class="bf-spark">⚡</span><span>Black Friday</span><span class="bf-dot">·</span><span>Специальные цены до −27%</span><span class="bf-dot">·</span><span>Успей забронировать место</span><span class="bf-dot">·</span>
+            <span class="bf-spark">⚡</span><span>Black Friday</span><span class="bf-dot">·</span><span>Специальные цены до −27%</span><span class="bf-dot">·</span><span>Успей забронировать место</span><span class="bf-dot">·</span>
+            <span class="bf-spark">⚡</span><span>Black Friday</span><span class="bf-dot">·</span><span>Специальные цены до −27%</span><span class="bf-dot">·</span><span>Успей забронировать место</span><span class="bf-dot">·</span>
+          </div>
+        </div>
+        <div class="bf-body">
     <div class="tariffs__grid">
 
       <!-- Card 1: Самозапуск -->
-      <div class="tariff-card">
+      <div class="tariff-card tariff-card--pulse">
         <div class="tariff-card__name">Самозапуск</div>
         <div class="tariff-card__old-price-row">
-          <span class="tariff-card__old-price">$799</span>
-          <span class="tariff-sale-badge">СКИДКА</span>
+          <span class="tariff-card__old-price">$599</span>
+          <span class="tariff-sale-badge">BLACK FRIDAY −17%</span>
         </div>
-        <div class="tariff-card__price">$599</div>
+        <div class="tariff-card__price">$499</div>
         <div class="tariff-card__divider"></div>
         <ul class="tariff-card__list">
           <li>
@@ -917,14 +995,14 @@
       </div>
 
       <!-- Card 2: OnlyFans Group -->
-      <div class="tariff-card tariff-card--popular">
+      <div class="tariff-card tariff-card--popular tariff-card--pulse">
         <div class="tariff-badge">ПОПУЛЯРНЫЙ</div>
         <div class="tariff-card__name tariff-card__name--gold">OnlyFans Group</div>
         <div class="tariff-card__old-price-row">
-          <span class="tariff-card__old-price">$1 900</span>
-          <span class="tariff-sale-badge">СКИДКА</span>
+          <span class="tariff-card__old-price">$1 499</span>
+          <span class="tariff-sale-badge">BLACK FRIDAY −27%</span>
         </div>
-        <div class="tariff-card__price">$1 499</div>
+        <div class="tariff-card__price">$1 100</div>
         <div class="tariff-card__divider"></div>
         <ul class="tariff-card__list">
           <li>
@@ -963,6 +1041,9 @@
       </div>
 
     </div>
+        </div><!-- /bf-body -->
+      </div><!-- /bf-inner -->
+    </div><!-- /bf-wrap -->
   </div>
 </section>
 
